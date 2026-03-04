@@ -23,9 +23,16 @@ export default function Admin() {
   };
 
   const removeUser = async (id) => {
-    await supabase.from("users_data").delete().eq("id", id);
-    loadUsers();
-  };
+  await supabase
+    .from("users_data")
+    .update({
+      status: "removed",
+      deleted: true
+    })
+    .eq("id", id);
+
+  loadUsers();
+};
 
   return (
     <div className="admin-container">
