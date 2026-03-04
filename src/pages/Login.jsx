@@ -21,11 +21,15 @@ export default function Login() {
       .eq("id", data.user.id)
       .single();
 
-    if (!userData || userData.status !== "approved") {
-      alert("Waiting for admin approval.");
-      await supabase.auth.signOut();
-      return;
-    }
+    if (
+  !userData ||
+  userData.status !== "approved" ||
+  userData.deleted
+) {
+  alert("Account disabled. Contact admin.");
+  await supabase.auth.signOut();
+  return;
+}
 
     window.location.href = "/pass.html";
   };
