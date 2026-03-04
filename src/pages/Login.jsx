@@ -36,15 +36,15 @@ export default function Login() {
 
   return (
     <div className="page-wrapper">
-      <div className="card">
-        <h2>Login</h2>
-        <form onSubmit={handleLogin}>
-          <input name="email" placeholder="Email" required />
-          <input name="password" type="password" required />
-          <button>Login</button>
-        </form>
-        <Link to="/signup">Create Account</Link>
-      </div>
-    </div>
+  <div className="card">
+    <h2>Login</h2>
+    <form onSubmit={handleLogin}>
+      <input name="email" placeholder="Email" required />
+      <input name="password" type="password" placeholder="Password" required />
+      <button>Login</button>
+    </form>
+    <Link to="/signup">Create Account</Link>
+  </div>
+</div>
   );
 }
