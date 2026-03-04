@@ -11,11 +11,18 @@ export default function Signup() {
     const password = e.target.password.value;
 
     const { data, error } = await supabase.auth.signUp({
-      email,
-      password,
-    });
+  email,
+  password,
+});
 
-    if (error) return alert(error.message);
+if (error) {
+  if (error.message.includes("already registered")) {
+    alert("Account exists. Please contact admin.");
+  } else {
+    alert(error.message);
+  }
+  return;
+}
 
     // CREATE USER RECORD
     await supabase.from("users_data").insert({
