@@ -1,55 +1,179 @@
+/* ===== RESET ===== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", system-ui, sans-serif;
+}
+
+/* ===== BACKGROUND ===== */
+body {
+  min-height: 100vh;
+  background: radial-gradient(circle at top, #1e293b, #020617);
+  color: #e5e7eb;
+}
+
+/* ===== PAGE CENTERING ===== */
 .page-wrapper {
   min-height: 100vh;
-  display: grid;
-  place-items: center;
-  background: #0f172a;
-}
-
-.card {
-  background: #020617;
-  color: white;
-  padding: 2rem;
-  border-radius: 12px;
-  width: 320px;
-}
-
-input {
-  width: 100%;
-  margin: 8px 0;
-  padding: 10px;
-  border-radius: 8px;
-  border: none;
-}
-
-button {
-  width: 100%;
-  padding: 10px;
-  margin-top: 10px;
-  border-radius: 8px;
-  border: none;
-  cursor: pointer;
-}
-
-.admin-container {
-  padding: 2rem;
-}
-
-.user-card {
-  background: #020617;
-  color: white;
-  padding: 1rem;
-  margin-bottom: 1rem;
-  border-radius: 10px;
   display: flex;
-  justify-content: space-between;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
 }
 
-.badge.pending { color: orange; }
-.badge.approved { color: lightgreen; }
+/* ===== GLASS CARD ===== */
+.card {
+  width: 100%;
+  max-width: 360px;
+  background: rgba(15, 23, 42, 0.75);
+  backdrop-filter: blur(14px);
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow:
+    0 0 40px rgba(99, 102, 241, 0.25),
+    inset 0 0 0 1px rgba(255,255,255,0.05);
+  animation: fadeUp 0.6s ease;
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ===== HEADINGS ===== */
+.card h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+/* ===== INPUTS ===== */
+.card input {
+  width: 100%;
+  margin-bottom: 14px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: none;
+  outline: none;
+  background: rgba(2, 6, 23, 0.8);
+  color: white;
+  font-size: 15px;
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.06);
+}
+
+.card input::placeholder {
+  color: #94a3b8;
+}
+
+/* ===== BUTTON ===== */
+.card button {
+  width: 100%;
+  padding: 12px;
+  border-radius: 14px;
+  border: none;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  color: white;
+  background: linear-gradient(135deg, #6366f1, #22d3ee);
+  box-shadow: 0 0 20px rgba(99,102,241,0.5);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.card button:active {
+  transform: scale(0.97);
+}
+
+/* ===== LINKS ===== */
+.card a {
+  display: block;
+  margin-top: 16px;
+  text-align: center;
+  font-size: 14px;
+  color: #93c5fd;
+  text-decoration: none;
+}
+
+/* ===== ADMIN PANEL ===== */
+.admin-container {
+  padding: 16px;
+  max-width: 720px;
+  margin: auto;
+}
+
+.admin-container h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* ===== USER CARD ===== */
+.user-card {
+  background: rgba(15, 23, 42, 0.8);
+  backdrop-filter: blur(10px);
+  border-radius: 14px;
+  padding: 14px;
+  margin-bottom: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.05);
+}
+
+.user-card strong {
+  font-size: 14px;
+  word-break: break-all;
+}
+
+/* ===== STATUS BADGES ===== */
+.badge {
+  font-size: 12px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  width: fit-content;
+}
+
+.badge.pending {
+  background: rgba(251, 191, 36, 0.15);
+  color: #facc15;
+}
+
+.badge.approved {
+  background: rgba(34, 197, 94, 0.15);
+  color: #4ade80;
+}
+
+/* ===== ADMIN BUTTONS ===== */
+.actions {
+  display: flex;
+  gap: 8px;
+}
 
 .actions button {
-  margin-left: 8px;
+  flex: 1;
+  padding: 8px;
+  border-radius: 10px;
+  font-size: 13px;
 }
 
-.approve { background: green; }
-.remove { background: crimson; }
+.actions .approve {
+  background: linear-gradient(135deg, #22c55e, #4ade80);
+}
+
+.actions .remove {
+  background: linear-gradient(135deg, #ef4444, #f87171);
+}
+
+/* ===== DESKTOP TWEAK ===== */
+@media (min-width: 640px) {
+  .card {
+    padding: 28px;
+  }
+}
