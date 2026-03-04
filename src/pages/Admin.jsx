@@ -1,47 +1,55 @@
-  import { useEffect, useState } from "react";
-  import { supabase } from "../supabaseClient";
+import { useEffect, useState } from "react";
+import { supabase } from "../supabaseClient";
 
-  export default function Admin() {
-    const [users, setUsers] = useState([]);
+export default function Admin() {
+  const [users, setUsers] = useState([]);
 
-    const loadUsers = async () => {
-      const { data } = await supabase
-        .from("users_data")
-        .select("*")
-        .order("created_at", { ascending: false });
+  const loadUsers = async () => {
+    const { data } = await supabase
+      .from("users_data")
+      .select("*")
+      .order("created_at", { ascending: false });
 
-      setUsers(data || []);
-    };
+    setUsers(data || []);
+  };
 
-    useEffect(() => {
-      loadUsers();
-    }, []);
+  useEffect(() => {
+    loadUsers();
+  }, []);
 
-    const approve = async (id) => {
-      await supabase
-        .from("users_data")
-        .update({ status: "approved" })
-        .eq("id", id);
+  const approve = async (id) => {
+    await supabase.from("users_data").update({ status: "approved" }).eq("id", id);
+    loadUsers();
+  };
 
-      loadUsers();
-    };
+  const removeUser = async (id) => {
+    await supabase.from("users_data").delete().eq("id", id);
+    loadUsers();
+  };
 
-    return (
-      <div className="admin-container">
-        <h2>Admin Panel</h2>
+  return (
+    <div className="admin-container">
+      <h2>Admin Dashboard</h2>
 
-        {users.map((user) => (
-          <div key={user.id} className="user-card">
-            <p><strong>{user.email}</strong></p>
-            <p>Status: {user.status}</p>
+      {users.map((u) => (
+        <div className="user-card" key={u.id}>
+          <div>
+            <strong>{u.email}</strong>
+            <span className={`badge ${u.status}`}>{u.status}</span>
+          </div>
 
-            {user.status === "pending" && (
-              <button onClick={() => approve(user.id)}>
+          <div className="actions">
+            {u.status === "pending" && (
+              <button className="approve" onClick={() => approve(u.id)}>
                 Approve
               </button>
             )}
+            <button className="remove" onClick={() => removeUser(u.id)}>
+              Remove
+            </button>
           </div>
-        ))}
-      </div>
-    );
-  }
+        </div>
+      ))}
+    </div>
+  );
+}
