@@ -10,11 +10,21 @@ export default function Signup() {
     const email = e.target.email.value;
     const password = e.target.password.value;
 
-    const { error } = await supabase.auth.signUp({ email, password });
+    const { data, error } = await supabase.auth.signUp({
+      email,
+      password,
+    });
 
     if (error) return alert(error.message);
 
-    alert("Signup successful. Wait for approval.");
+    // CREATE USER RECORD
+    await supabase.from("users_data").insert({
+      id: data.user.id,
+      email,
+      status: "pending",
+    });
+
+    alert("Account created. Waiting for admin approval.");
     navigate("/");
   };
 
@@ -23,17 +33,11 @@ export default function Signup() {
       <div className="card">
         <h2>Create Account</h2>
         <form onSubmit={handleSignup}>
-          <div className="input-group">
-            <input name="email" placeholder="Email" required />
-          </div>
-          <div className="input-group">
-            <input name="password" type="password" placeholder="Password" required />
-          </div>
+          <input name="email" placeholder="Email" required />
+          <input name="password" type="password" placeholder="Password" required />
           <button>Sign Up</button>
         </form>
-        <div className="link">
-          <Link to="/">Back to Login</Link>
-        </div>
+        <Link to="/">Back to Login</Link>
       </div>
     </div>
   );
